@@ -13,20 +13,17 @@ if not os.path.isfile("passwords.txt"):
     file1 = open("passwords.txt", "w")
     file1.close()
 
-with open('passwords.txt', 'a+') as file:
-    if command == "add":
-        add_command(argument, file)
+if command == "add":
+    add_command(argument)
 
-    elif command == "passwd":
-        passwd_command(argument)
+elif command == "passwd":
+    passwd_command(argument)
 
-    elif command == "forcepass":
-        forcepass_command(argument)
+elif command == "forcepass":
+    forcepass_command(argument)
 
-    elif command == "del":
-        del_command(argument)
+elif command == "del":
+    del_command(argument)
 
-    else:
-        print("Wrong command")
-
-file.close()
+else:
+    print("Wrong command")

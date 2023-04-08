@@ -1,26 +1,24 @@
-import bcrypt
-
-from typing import TextIO
 from getpass import getpass
 
-from utf8_operations import encodeUTF8
+import bcrypt
+
+from custom_operations import encodeUTF8, hash_password, write_line
 
 
-def add_command(username: str, file: TextIO):
-    change_pass_flag = False
-    hashed_password: bytes = bytes()
+def add_command(username: str):
+    with open('passwords.txt', 'a+') as file:
+        change_pass_flag = "0"
+        hashed_password: bytes = bytes()
 
-    password = getpass("Password: ")
-    repeat_password = getpass("Repeat password: ")
-    if password == repeat_password:
-        print("User " + username + " successfuly added.")
+        password = getpass("Password: ")
+        repeat_password = getpass("Repeat password: ")
+        if password == repeat_password:
+            print("User " + username + " successfuly added.")
 
-        password_bytes = encodeUTF8(password)
-        salt = bcrypt.gensalt()
+            hashed_password: str = hash_password(password)
+        else:
+            print("User add failed. Password mismatch.")
+            quit()
 
-        hashed_password = bcrypt.hashpw(password_bytes, salt)
-    else:
-        print("User add failed. Password mismatch.")
-        quit()
-
-    file.write(username + " " + change_pass_flag.__str__() + " " + hashed_password.__str__() + "\n")
+        write_line(username, change_pass_flag, hashed_password, file)
+        file.close()

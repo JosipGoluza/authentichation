@@ -1,3 +1,15 @@
+from custom_operations import remove_line, write_file
+
 
 def del_command(del_argument: str):
-    pass
+    with open('passwords.txt', 'r+') as file:
+        for line in file:
+            lineList = line.split()
+            if lineList[0] == del_argument:
+                all_lines = remove_line(file, line)
+                write_file(file, all_lines)
+                print("User deleted.")
+                file.close()
+                quit()
+        print("Username does not exist")
+        file.close()
