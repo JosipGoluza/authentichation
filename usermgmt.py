@@ -13,9 +13,9 @@ if not os.path.isfile("passwords.txt"):
     file1 = open("passwords.txt", "w")
     file1.close()
 
-with open('passwords.txt', 'r+') as file:
+with open('passwords.txt', 'a+') as file:
     if command == "add":
-        add_command(argument)
+        add_command(argument, file)
 
     elif command == "passwd":
         passwd_command(argument)
