@@ -1,0 +1,10 @@
+Naredbe:
+./usermgmt.sh add josip - naredba koja dodaje novog korisnika s korisnickim imenom josip i šifrom koja se unosi s tipkovnice.
+
+Za hashiranje koristio sam bcrypt library.
+Salt se generira iz metode bcrypt.gensalt.
+Hashiranje se provodi uz pomoć metode hashpw koja prima šifru i salt i vraća hashirani skup byte-ova.
+Kod bcrypta nije potrebno zasebno spremati salt jer se on nalazi u samom hashu.
+
+Prilikom dodaje korisnika u datoteku se dodaje zastavica za forsiranje promjene šifre koja govori trebali li korisnika forsirati da promjeni šifru idući put kad se logira.
+Korisnička imena i hashirane šifre se čuvaju u datoteci passwords.txt.
