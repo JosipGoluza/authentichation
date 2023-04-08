@@ -1,10 +1,6 @@
-from typing import TextIO
+from typing import TextIO, List
 
 import bcrypt
-
-
-def decodeUTF8(data: bytes):
-    return data.decode('utf-8')
 
 
 def encodeUTF8(data: str):
@@ -21,7 +17,7 @@ def hash_password(password: str):
 
     hashed_password_bytes = bcrypt.hashpw(password_bytes, salt)
 
-    return decodeUTF8(hashed_password_bytes)
+    return hashed_password_bytes.decode('utf-8')
 
 
 def write_file(file: TextIO, all_lines: list):
@@ -31,10 +27,10 @@ def write_file(file: TextIO, all_lines: list):
         file.write(line)
 
 
-def remove_line(file, line):
+def remove_line(file, username):
     file.seek(0)
-    all_lines = file.readlines()
+    all_lines: List[str] = file.readlines()
     for all_line in all_lines:
-        if all_line == line:
+        if all_line.startswith(username):
             all_lines.remove(all_line)
     return all_lines

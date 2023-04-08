@@ -1,11 +1,16 @@
 Naredbe:
 ./usermgmt.sh add user - naredba koja dodaje novog korisnika s korisnickim imenom user i šifrom koja se unosi s tipkovnice.
 ./usermgmt.sh passwd user - naredba koja mijenja šifru korisnika user.
+./usermgmt.sh forcepass user - naredba koja forsira korisniku promjenu šifre idući put kad se logira.
+./usermgmt.sh del user - naredba koja briše korisnika user.
+./login user - naredba koja provjerava jesu li korisničko ime i šifra ispravn, ako je administrator forsirao promjenu šifre, korisniku se prikaže poruka da promjeni šifru i nakon toga se korisnik logira.
+
 
 Za hashiranje koristio sam bcrypt library.
 Salt se generira iz metode bcrypt.gensalt.
 Hashiranje se provodi uz pomoć metode hashpw koja prima šifru i salt i vraća hashirani skup byte-ova.
 Kod bcrypta nije potrebno zasebno spremati salt jer se on nalazi u samom hashu.
+Provjera autentičnosti ide preko funkcije checkpw, ona vraća true ako je unesena ista šifra koja je hashirana, inače vraća false.
 
-Prilikom dodaje korisnika u datoteku se dodaje zastavica za forsiranje promjene šifre koja govori trebali li korisnika forsirati da promjeni šifru idući put kad se logira.
+Prilikom dodavanja korisnika u datoteku se dodaje zastavica za forsiranje promjene šifre koja govori trebali li korisnika forsirati da promjeni šifru idući put kad se logira.
 Korisnička imena, zastavice za forsiranje promjene i hashirane šifre se čuvaju u datoteci passwords.txt.
