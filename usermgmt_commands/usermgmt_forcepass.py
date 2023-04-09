@@ -9,8 +9,7 @@ def forcepass_command(username: str):
                 all_lines = remove_line(file, username)
 
                 new_user = lineList[0]
-                lineList[1] = "1" if lineList[1] == "0" else "0"
-                new_flag = lineList[1]
+                new_flag = "1"
                 new_password = lineList[2]
                 all_lines.append(new_user + " " + new_flag + " " + new_password + "\n")
 

@@ -49,7 +49,9 @@ with open("passwords.txt", "r+") as file:
 
                         write_file(file, all_lines)
                 else:
-                    print("Wrong password")
+                    print("Username or password incorrect.")
             else:
                 print("Wrong flag")
-            quit()
+                quit()
+    print("Username does not exist")
+    file.close()

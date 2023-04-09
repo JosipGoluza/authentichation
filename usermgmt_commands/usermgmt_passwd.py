@@ -12,7 +12,7 @@ def passwd_command(username: str):
                 repeat_password = getpass("Repeat password: ")
 
                 if password == repeat_password:
-                    all_lines = remove_line(file, line)
+                    all_lines = remove_line(file, username)
 
                     new_password = hash_password(password)
                     new_user = lineList[0]

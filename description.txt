@@ -14,3 +14,9 @@ Provjera autentičnosti ide preko funkcije checkpw, ona vraća true ako je unese
 
 Prilikom dodavanja korisnika u datoteku se dodaje zastavica za forsiranje promjene šifre koja govori trebali li korisnika forsirati da promjeni šifru idući put kad se logira.
 Korisnička imena, zastavice za forsiranje promjene i hashirane šifre se čuvaju u datoteci passwords.txt.
+
+Tajnost se postiže tako da su šifre hashirane uz pomoć nasumično generiranog salta, tako da ih je nemoguće pročitati iz datoteke.
+
+Autentifikacija je postignuta tako da se korisničko ime i šifra unose, ako su podaci ispravni, korisnik se logira, inače se ispisuje poruka o pogrešci.
+Autorizacija je postignuta pod pretpostavkom da će se prijavljivati samo legitimni korisnici te da nitko od njih neće zloupotrebljavati svoje ovlast.
+Zbog korištenja salta, hashiranje nije determinističko, tako da napadač ne može izvršiti brute force ili dictionary napad na šifre.

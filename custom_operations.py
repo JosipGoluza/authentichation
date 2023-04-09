@@ -31,6 +31,17 @@ def remove_line(file, username):
     file.seek(0)
     all_lines: List[str] = file.readlines()
     for all_line in all_lines:
-        if all_line.startswith(username):
+        all_line_list = all_line.split()
+        if all_line_list[0] == username:
             all_lines.remove(all_line)
     return all_lines
+
+
+def check_existing_user(file, username):
+    file.seek(0)
+    file_lines = file.readlines()
+    for line in file_lines:
+        line_list = line.split()
+        if username == line_list[0]:
+            print("User already exists.")
+            quit()
