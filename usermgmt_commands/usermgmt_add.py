@@ -1,5 +1,7 @@
 from getpass import getpass
 
+import bcrypt
+
 from custom_operations import encodeUTF8, hash_password, write_line, check_existing_user
 
 
@@ -8,7 +10,6 @@ def add_command(username: str):
         check_existing_user(file, username)
 
         change_pass_flag = "0"
-        hashed_password: bytes = bytes()
 
         password = getpass("Password: ")
         repeat_password = getpass("Repeat password: ")
@@ -23,5 +24,6 @@ def add_command(username: str):
             print("User add failed. Password mismatch.")
             quit()
 
-        write_line(username, change_pass_flag, hashed_password, file)
+        hashed_username = bcrypt.hashpw(encodeUTF8(username), bcrypt.gensalt()).decode('utf-8')
+        write_line(hashed_username, change_pass_flag, hashed_password, file)
         file.close()

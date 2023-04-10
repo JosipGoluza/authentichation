@@ -4,7 +4,7 @@ from getpass import getpass
 
 import bcrypt
 
-from custom_operations import remove_line, hash_password, write_file
+from custom_operations import remove_line, hash_password, write_file, encodeUTF8
 
 if not os.path.isfile("passwords.txt"):
     file1 = open("passwords.txt", "w")
@@ -16,15 +16,15 @@ with open("passwords.txt", "r+") as file:
     lines = file.readlines()
     for line in lines:
         lineList = line.split()
-        if username == lineList[0]:
+        if bcrypt.checkpw(username.encode('utf-8'), lineList[0].encode('utf-8')):
             if lineList[1] == "0":
                 hashed_password = lineList[2].encode('utf-8')
                 # encoding user password
                 password = getpass("Password: ")
-                userBytes = password.encode('utf-8')
+                passwordBytes = password.encode('utf-8')
 
                 # checking password
-                if bcrypt.checkpw(userBytes, hashed_password):
+                if bcrypt.checkpw(passwordBytes, hashed_password):
                     print("Login successful")
                 else:
                     print("Wrong password")
@@ -42,7 +42,7 @@ with open("passwords.txt", "r+") as file:
                     if new_password == repeat_new_password:
                         all_lines = remove_line(file, username)
 
-                        new_user = username
+                        new_user = bcrypt.hashpw(encodeUTF8(username), bcrypt.gensalt()).decode('utf-8')
                         new_flag = "0"
                         new_password_hashed = hash_password(new_password)
                         all_lines.append(new_user + " " + new_flag + " " + new_password_hashed + "\n")
@@ -52,6 +52,6 @@ with open("passwords.txt", "r+") as file:
                     print("Username or password incorrect.")
             else:
                 print("Wrong flag")
-                quit()
+            quit()
     print("Username does not exist")
     file.close()

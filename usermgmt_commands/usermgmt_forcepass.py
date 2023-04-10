@@ -1,3 +1,5 @@
+import bcrypt
+
 from custom_operations import remove_line, write_file
 
 
@@ -5,7 +7,7 @@ def forcepass_command(username: str):
     with open('passwords.txt', 'r+') as file:
         for line in file:
             lineList = line.split()
-            if lineList[0] == username:
+            if bcrypt.checkpw(username.encode('utf-8'), lineList[0].encode('utf-8')):
                 all_lines = remove_line(file, username)
 
                 new_user = lineList[0]
@@ -16,3 +18,7 @@ def forcepass_command(username: str):
                 write_file(file, all_lines)
 
                 print("User will be requested to change password on next login.")
+                file.close()
+                quit()
+        print("Username does not exist")
+        file.close()

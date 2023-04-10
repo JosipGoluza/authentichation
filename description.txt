@@ -8,12 +8,14 @@ Naredbe:
 
 Za hashiranje koristio sam bcrypt library.
 Salt se generira iz metode bcrypt.gensalt.
-Hashiranje se provodi uz pomoć metode hashpw koja prima šifru i salt i vraća hashirani skup byte-ova.
+Hashiranje se provodi uz pomoć metode hashpw koja prima šifru i salt koji je drugaciji za svakog korisnika i vraća hashirani skup byte-ova.
 Kod bcrypta nije potrebno zasebno spremati salt jer se on nalazi u samom hashu.
 Provjera autentičnosti ide preko funkcije checkpw, ona vraća true ako je unesena ista šifra koja je hashirana, inače vraća false.
 
 Prilikom dodavanja korisnika u datoteku se dodaje zastavica za forsiranje promjene šifre koja govori trebali li korisnika forsirati da promjeni šifru idući put kad se logira.
 Korisnička imena, zastavice za forsiranje promjene i hashirane šifre se čuvaju u datoteci passwords.txt.
+Lozinka ne smije  biti kraća od 8 znakova.
+Uz pomoć getpass librarya šifra se unosi s tipkovnice bez da se prikazuje na ekranu.
 
 Tajnost se postiže tako da su šifre hashirane uz pomoć nasumično generiranog salta, tako da ih je nemoguće pročitati iz datoteke.
 

@@ -28,20 +28,22 @@ def write_file(file: TextIO, all_lines: list):
 
 
 def remove_line(file, username):
+    username_bytes = encodeUTF8(username)
     file.seek(0)
     all_lines: List[str] = file.readlines()
     for all_line in all_lines:
         all_line_list = all_line.split()
-        if all_line_list[0] == username:
+        if bcrypt.checkpw(username_bytes, all_line_list[0].encode('utf-8')):
             all_lines.remove(all_line)
     return all_lines
 
 
-def check_existing_user(file, username):
+def check_existing_user(file, username: str):
     file.seek(0)
-    file_lines = file.readlines()
+    file_lines: List[str] = file.readlines()
+    username_bytes = encodeUTF8(username)
     for line in file_lines:
         line_list = line.split()
-        if username == line_list[0]:
+        if bcrypt.checkpw(username_bytes, line_list[0].encode('utf-8')):
             print("User already exists.")
             quit()

@@ -1,5 +1,7 @@
 from getpass import getpass
 
+import bcrypt
+
 from custom_operations import hash_password, write_file, remove_line
 
 
@@ -7,7 +9,7 @@ def passwd_command(username: str):
     with open('passwords.txt', 'r+') as file:
         for line in file:
             lineList = line.split()
-            if lineList[0] == username:
+            if bcrypt.checkpw(username.encode('utf-8'), lineList[0].encode('utf-8')):
                 password = getpass("Password: ")
                 repeat_password = getpass("Repeat password: ")
 
